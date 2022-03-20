@@ -1,0 +1,17 @@
+.todo__app {
+  height: 600px;
+  background-color: #424cf9;
+  width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+
+.title {
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 2.2rem;
+  color: #fff;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: Poppins;
+}

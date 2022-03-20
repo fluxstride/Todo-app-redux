@@ -1,30 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from "uuid"
+import { createSlice } from "@reduxjs/toolkit";
 
-
-const initialState = [{
-  id: uuidv4(), text: "Wake Up"
-}]
-
-
+const initialState = [];
 const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      state.push(action.payload)
-
+      state.push(action.payload);
     },
     removeTodo: (state, action) => {
-      const index = state.findIndex((todo) => todo.id === action.payload.id);
-      state.splice(index, 1);
+      const index = state.findIndex(todo => todo.id === action.payload.id)
+      state.splice(index, 1)
     },
     editTodo: (state, action) => {
-      return state
+      const index = state.findIndex(todo => todo.id === action.payload.id)
+      state[index].text && (state[index].text = action.payload.text)
     }
   }
-})
+});
 
-export const { addTodo, removeTodo } = todoSlice.actions
-const reducer = todoSlice.reducer
-export default reducer
+export const { addTodo, removeTodo, editTodo } = todoSlice.actions;
+const reducer = todoSlice.reducer;
+export default reducer;

@@ -1,79 +1,25 @@
-import "./styles.css"
-import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { removeTodo, addTodo } from "./todoSlice"
-import { v4 as uuidv4 } from "uuid"
+import truncate from "./utils/truncate"
+import "./Todo.css"
+import { useDispatch } from 'react-redux';
+import { displayEditModal } from "./uiSlice";
+import { removeTodo } from "./todoSlice";
 
+const Todo = ({ todo }) => {
 
-const TodoList = () => {
-	const state = useSelector(state => state)
-	const todos = state.todos
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const editModalShow = () => dispatch(displayEditModal(todo.id))
+    const removeTodoItem = () => dispatch(removeTodo(todo.id))
+    return (
+        <div className="todo__container">
+            <div className="todo__text" title={todo.text}>{`${"✔"}  ${truncate(todo.text, 28)}`}</div>
 
-	return (
-		<div className="todos">
-			{
-				todos.map(todo =>
-					<p className="todo__item" onClick={() => {
-						dispatch(removeTodo(todo))
-					}} key={todo.id}>{todo.text}</p>
-				)
-			}
-		</div>
-	)
+            <div className="todo__modify">
+                <div className="todo__edit modify" onClick={editModalShow}>Edit</div>
+                <div className="todo__delete  todo__modify__last__child" onClick={removeTodoItem}>X</div>
+            </div>
+
+        </div>
+    )
 }
 
-const TodoEditModal = () => {
-	const dispatch = useDispatch()
-
-	const [todo, setTodo] = useState({
-		id: uuidv4(),
-		text: ""
-	})
-
-	const onChange = (e) => {
-		setTodo({ ...todo, id: uuidv4(), text: e.target.value })
-	}
-	return (
-		<div className="todo__input__container">
-			<input type="text" className="todo__input" placeholder="enter your todo here" onChange={onChange} value={todo.text} />
-			<button className="todo__add__button" onClick={() => {
-				dispatch(addTodo(todo))
-				setTodo({ ...todo, id: uuidv4(), text: "" })
-			}
-			}>Add</button>
-		</div>
-	)
-}
-
-const Todo = () => {
-	const dispatch = useDispatch()
-
-	const [todo, setTodo] = useState({
-		id: uuidv4(),
-		text: ""
-	})
-
-	const onChange = (e) => {
-		setTodo({ ...todo, id: uuidv4(), text: e.target.value })
-	}
-
-
-	return (
-		<div className="todo">
-			<div className="todo__input__container">
-				<input type="text" className="todo__input" placeholder="enter your todo here" onChange={onChange} value={todo.text} />
-				<button className="todo__add__button" onClick={() => {
-					dispatch(addTodo(todo))
-					setTodo({ ...todo, id: uuidv4(), text: "" })
-				}
-				}>Add</button>
-			</div>
-			<TodoList />
-			<TodoEditModal/>
-
-		</div>
-	)
-}
-
-export default Todo;
+export default Todo

@@ -1,0 +1,35 @@
+.todo__input__container {
+  width: fit-content;
+  display: block;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+}
+
+.todo__input {
+  margin-right: 1rem;
+  font-size: 1rem;
+  padding: 0.7rem;
+  border-radius: 5px;
+  width: 350px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.07);
+}
+
+.todo__input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  font-family: Poppins;
+}
+
+.todo__add__button {
+  width: 100px;
+  border-radius: 5px;
+  background: #12006c;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.14);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.6rem;
+  font-family: Poppins;
+}
+
+.title {
+  margin-top: 2rem;
+}
