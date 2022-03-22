@@ -12,7 +12,7 @@ const TodoList = () => {
     <div className="todo__list">
       {!todos.length && <NoTodo />}
       {todos.map(todo =>
-        <Todo key={new Date()} todo={todo} />
+        <Todo key={new Date().toString()} todo={todo} />
       )}
     </div>
   );
