@@ -1,24 +1,30 @@
-import EditModal from "./EditModal";
 import "./styles.css";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import "./TodoApp.css"
 import { Provider } from "./context";
 import { useState } from 'react';
+import { useEffect } from "react";
+
 
 const TodoApp = () => {
 
-  const stateData = {
+  const stateData = JSON.parse(localStorage.getItem("state")) || {
     todos: [],
     ui: {
       editModal: {
-        display: false
+        display: false,
+        todoId: null
       }
     }
   }
 
 
   const [state, setState] = useState(stateData);
+
+  useEffect(() => {
+    localStorage.setItem(state, state);
+  }, [state]);
   return (
     <Provider value={{ state, setState }}>
       <div className="todo__app">
@@ -26,7 +32,6 @@ const TodoApp = () => {
         <TodoInput />
         <TodoList />
       </div>
-      {/* {uiShow && <EditModal />} */}
     </Provider>
 
 

@@ -5,9 +5,7 @@ import "./TodoInput.css"
 const TodoInput = () => {
 
   const mainState = useContext(context);
-  const { setState, state } = mainState
-  console.log(state)
-  const todos = state.todos
+  const { setState } = mainState
 
 
   const [todo, setTodo] = useState({
@@ -20,7 +18,11 @@ const TodoInput = () => {
   };
   const onSubmit = e => {
     e.preventDefault();
-    setState([...todos, todo]);
+    setState(prevState => {
+      return {
+        ...prevState, todos: [...prevState.todos, todo]
+      }
+    });
     setTodo({ ...todo, text: "" });
   };
 

@@ -1,26 +1,69 @@
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { displayEditModal } from "./uiSlice";
-import { editTodo, removeTodo } from "./todoSlice";
+import { useState, useContext } from "react";
+import context from "./context";
 import "./EditModal.css"
 
 
 const EditModal = () => {
-  const dispatch = useDispatch();
-  const state = useSelector(state => state);
+  const mainState = useContext(context);
+  const { state, setState } = mainState;
+
   const todoId = state.ui.editModal.todoId;
   const todos = state.todos
   const todoItem = state.todos.findIndex(todo => todo.id === todoId);
-  const todo = todos[todoItem]
-  const [text, setText] = useState(todo.text);
+  const currentTodo = todos[todoItem]
+  const [text, setText] = useState(currentTodo.text);
 
   const handleChange = (e) => {
     setText(e.target.value)
   }
+
+  const editTodo = () => {
+    setState(prevState => {
+      return {
+        ...prevState,
+        todos: prevState.todos.map(todo => {
+          if (todo.id === todoId) {
+            return {
+              ...todo,
+              text
+            }
+          }
+          return todo
+        })
+      }
+    })
+
+  }
+  const hideEditModal = () => {
+    setState(prevState => {
+      return {
+        ...prevState,
+        ui: {
+          ...prevState.ui,
+          editModal: {
+            display: false,
+            todoId: null
+          }
+        }
+      }
+    })
+
+  }
+
+  const removeTodo = (id) => () => {
+    const newTodos = state.todos.filter(todo => todo.id !== id)
+
+    setState(prevState => {
+      return {
+        ...prevState,
+        todos: newTodos
+      }
+    })
+  }
+
   return (
     <div >
-      <div className="backdrop" onClick={() => dispatch(displayEditModal())} ></div>
+      <div className="backdrop" onClick={() => hideEditModal()} ></div>
       <div className="editModal__container">
         <div className="input__container">
           <div className="inner__input__container">
@@ -28,11 +71,11 @@ const EditModal = () => {
             <button
               onClick={() => {
                 if (text.length) {
-                  dispatch(editTodo({ id: todo.id, text: text }))
+                  editTodo(currentTodo.id)
                 } else {
-                  dispatch(removeTodo(todo.id))
+                  removeTodo(currentTodo.id)
                 }
-                dispatch(displayEditModal())
+                hideEditModal()
               }}
               className="modify__button"
             >
