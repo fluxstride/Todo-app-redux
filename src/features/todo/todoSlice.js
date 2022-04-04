@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
 const savedState = localStorage.getItem('state') !== null ? localStorage.getItem('state') : '[]';
 const initialState = JSON.parse(savedState);
@@ -7,7 +8,11 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      state.push(action.payload);
+      const newTodo = {
+        id: uuidv4(),
+        text: action.payload.text
+      }
+      state.push(newTodo);
       localStorage.setItem('state', JSON.stringify(state))
     },
     removeTodo: (state, action) => {

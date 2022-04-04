@@ -1,23 +1,21 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "./todoSlice";
-import { v4 as uuidv4 } from "uuid";
 import "./TodoInput.css"
 const TodoInput = () => {
   const dispatch = useDispatch();
 
   const [todo, setTodo] = useState({
-    id: uuidv4(),
     text: ""
   });
 
   const onChange = e => {
-    setTodo({ ...todo, id: uuidv4(), text: e.target.value });
+    setTodo({ ...todo, text: e.target.value });
   };
   const onSubmit = e => {
     e.preventDefault();
     dispatch(addTodo(todo));
-    setTodo({ ...todo, id: uuidv4(), text: "" });
+    setTodo({ ...todo, text: "" });
   };
 
   return (
