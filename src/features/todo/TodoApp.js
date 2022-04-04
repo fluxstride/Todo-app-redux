@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const TodoApp = () => {
 
-  const stateData = JSON.parse(localStorage.getItem("state")) || {
+  const stateData = {
     todos: [],
     ui: {
       editModal: {
