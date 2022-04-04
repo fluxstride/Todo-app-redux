@@ -1,21 +1,32 @@
 import truncate from "./utils/truncate"
+import { useContext } from "react";
+import context from "./context";
 import "./Todo.css"
-import { useDispatch } from 'react-redux';
-import { displayEditModal } from "./uiSlice";
-import { removeTodo } from "./todoSlice";
 
 const Todo = ({ todo }) => {
 
-    const dispatch = useDispatch()
-    const editModalShow = () => dispatch(displayEditModal(todo.id))
-    const removeTodoItem = () => dispatch(removeTodo(todo.id))
+    const mainState = useContext(context);
+    const { setState, state } = mainState
+
+
+    const editModalShow = () => { }
+    const removeTodoItem = (id) => () => {
+        const newTodos = state.todos.filter(todo => todo.id !== id)
+
+        setState(prevState => {
+            return {
+                ...prevState,
+                todos: newTodos
+            }
+        })
+    }
     return (
         <div className="todo__container">
             <div className="todo__text" title={todo.text}>{`${"✔"}  ${truncate(todo.text, 28)}`}</div>
 
             <div className="todo__modify">
                 <div className="todo__edit modify" onClick={editModalShow}>Edit</div>
-                <div className="todo__delete  todo__modify__last__child" onClick={removeTodoItem}>X</div>
+                <div className="todo__delete  todo__modify__last__child" onClick={removeTodoItem(todo.id)}>X</div>
             </div>
 
         </div>

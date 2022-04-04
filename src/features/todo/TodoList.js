@@ -1,12 +1,17 @@
-import { useSelector } from "react-redux";
+
 import Todo from "./Todo"
 import './TodoList.css'
 import NoTodo from './NoTodo';
+import { useContext } from 'react';
+import context from "./context";
 
 
 const TodoList = () => {
-  const state = useSelector(state => state);
-  const todos = state.todos;
+  const mainState = useContext(context)
+  const { state } = mainState
+
+  const todos = state.todos
+
   return (
     <div className="todo__list">
       {!todos.length && <NoTodo />}
