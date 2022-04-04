@@ -21,7 +21,6 @@ const Todo = ({ todo }) => {
                 }
             }
         })
-
     }
     const removeTodoItem = (id) => () => {
         const newTodos = state.todos.filter(todo => todo.id !== id)
