@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const TodoApp = () => {
 
-  const stateData = localStorage.getItem("state") && JSON.parse(localStorage.getItem("state")) || {
+  const stateData = {
     todos: [],
     ui: {
       editModal: {
@@ -22,9 +22,9 @@ const TodoApp = () => {
 
   const [state, setState] = useState(stateData);
 
-  useEffect(() => {
+  /*useEffect(() => {
     localStorage.setItem("state", JSON.stringify(state));
-  }, [state]);
+  }, [state]);*/
   return (
     <Provider value={{ state, setState }}>
       <div className="todo__app">
