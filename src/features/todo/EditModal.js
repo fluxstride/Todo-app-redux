@@ -54,7 +54,7 @@ const EditModal = () => {
     setState(prevState => {
       return {
         ...prevState,
-        todos: prevState.todos.filter(todo => todo.id !== currentTodo.id)
+        todos: prevState.todos.filter(todo => todo.id !== id)
       }
     })
   }
