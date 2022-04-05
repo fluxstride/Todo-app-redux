@@ -34,14 +34,14 @@ const EditModal = () => {
     })
 
   }
-  const hideEditModal = () => {
+  const toggleEditModal = () => {
     setState(prevState => {
       return {
         ...prevState,
         ui: {
           ...prevState.ui,
           editModal: {
-            display: false,
+            display: (() => { return prevState.ui.editModal.display ? false : true })(),
             todoId: null
           }
         }
@@ -50,20 +50,18 @@ const EditModal = () => {
 
   }
 
-  const removeTodo = (id) => () => {
-    const newTodos = state.todos.filter(todo => todo.id !== id)
-
+  const removeTodo = (id) => {
     setState(prevState => {
       return {
         ...prevState,
-        todos: newTodos
+        todos: prevState.todos.filter((todo) => todo.id !== id)
       }
     })
   }
 
   return (
     <div >
-      <div className="backdrop" onClick={() => hideEditModal()} ></div>
+      <div className="backdrop" onClick={() => toggleEditModal()} ></div>
       <div className="editModal__container">
         <div className="input__container">
           <div className="inner__input__container">
@@ -72,11 +70,13 @@ const EditModal = () => {
               onClick={() => {
                 if (text.length) {
                   editTodo(currentTodo.id)
-                } else {
-                  removeTodo(currentTodo.id)
+                  toggleEditModal()
+                  return;
                 }
-                hideEditModal()
-              }}
+                removeTodo(currentTodo.id)
+                toggleEditModal()
+              }
+              }
               className="modify__button"
             >
               Modify
