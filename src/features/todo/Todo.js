@@ -4,7 +4,6 @@ import context from "./context";
 import "./Todo.css"
 
 const Todo = ({ todo }) => {
-
   const mainState = useContext(context);
   const { setState, state } = mainState
 
@@ -42,6 +41,7 @@ const Todo = ({ todo }) => {
 
     </div>
   )
+
 }
 
 export default Todo
